@@ -8,6 +8,7 @@ const nextBtn = document.querySelector(".nav.next");
 
 let currentIndex = 0;
 let slideshowInterval = null;
+let selectedPhoto = null; // simpan foto yang diklik
 
 function showImage(index) {
   const img = thumbnails[index];
@@ -39,9 +40,9 @@ function nextImage() {
   }
 }
 
-// Klik thumbnail → tampilkan popup
+// Klik thumbnail → tampilkan popup foto
 thumbnails.forEach((img, index) => {
-  img.addEventListener("click", function () {
+  img.addEventListener("click", () => {
     currentIndex = index;
     popup.style.display = "block";
     showImage(currentIndex);
@@ -53,19 +54,26 @@ const favPopup = document.getElementById("fav-popup");
 const favPopupClose = document.querySelector(".fav-popup-close");
 const favSignin = document.getElementById("fav-signin");
 
-// Klik tombol favorites (thumbnail & toolbar)
+// Tombol favorites di setiap thumbnail
 document.querySelectorAll(".thumb-btn.fav").forEach(btn => {
   btn.addEventListener("click", (e) => {
     e.stopPropagation();
+    const img = btn.closest(".thumb-wrapper").querySelector(".thumbnail");
+    selectedPhoto = {
+      name: img.alt,
+      url: img.dataset.full
+    };
     favPopup.style.display = "flex";
   });
 });
 
+// Tombol favorites di toolbar (tanpa foto)
 document.getElementById("btn-fav").addEventListener("click", () => {
+  selectedPhoto = null;
   favPopup.style.display = "flex";
 });
 
-// Klik tombol close (X)
+// Tutup popup hanya dengan tombol X
 favPopupClose.addEventListener("click", () => {
   favPopup.style.display = "none";
 });
@@ -73,29 +81,31 @@ favPopupClose.addEventListener("click", () => {
 // Jangan tutup popup jika klik area luar
 favPopup.addEventListener("click", (e) => {
   if (e.target === favPopup) {
-    // abaikan, jangan tutup popup
+    // abaikan
   }
 });
 
-// Klik SIGN IN
+// Tombol SIGN IN → Kirim email via EmailJS
 favSignin.addEventListener("click", () => {
   const email = document.getElementById("fav-email").value;
   if (!email) {
     alert("Masukkan email terlebih dahulu.");
-  } else {
-    emailjs.send("service_18z3kpe", "template_u78o5vi", {
-      user_email: email,
-      message: "Terima kasih! Foto favorit kamu sudah disimpan."
-    })
-    .then(() => {
-      alert("Email berhasil dikirim ke " + email);
-      favPopup.style.display = "none";
-    })
-    .catch((err) => {
-      console.error("Email gagal:", err);
-      alert("Gagal mengirim email. Coba lagi.");
-    });
+    return;
   }
+
+  emailjs.send("service_18z3kpe", "template_u78o5vi", {
+    user_email: email,
+    photo_name: selectedPhoto ? selectedPhoto.name : "(Tidak ada foto dipilih)",
+    photo_url: selectedPhoto ? selectedPhoto.url : "",
+  })
+  .then(() => {
+    alert("Email terkirim ke " + email);
+    favPopup.style.display = "none";
+  })
+  .catch((err) => {
+    console.error("Email gagal:", err);
+    alert("Gagal mengirim email. Coba lagi.");
+  });
 });
 
 // Tombol download & share di thumbnail
@@ -146,7 +156,7 @@ popup.addEventListener("click", (e) => {
   if (e.target === popupImg || e.target.classList.contains("nav")) return;
 });
 
-// Toolbar Buttons (Download, Share, Slideshow)
+// Toolbar Buttons
 document.getElementById("btn-download").addEventListener("click", () => {
   if (!popupImg.src) return alert("Buka foto dulu.");
   const link = document.createElement("a");
