@@ -164,7 +164,7 @@ document.getElementById("btn-download").addEventListener("click", () => {
 document.getElementById("btn-share").addEventListener("click", () => {
   if (navigator.clipboard) {
     navigator.clipboard.writeText(window.location.href);
-    alert("Link halaman disalin!");
+    // alert("Link halaman disalin!"); // alert dihapus
   } else {
     alert("Browser tidak mendukung clipboard.");
   }
@@ -233,4 +233,31 @@ sharePopup.addEventListener("click", (e) => {
 
 document.querySelector(".share-close").addEventListener("click", () => {
   document.getElementById("share-popup").style.display = "none";
+});
+
+btn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  const img = btn.closest(".thumb-wrapper").querySelector(".thumbnail");
+
+  selectedPhoto = {
+    name: img.alt,
+    url: new URL(img.dataset.full, document.baseURI).href
+  };
+
+  // Tutup saat klik tombol X
+document.querySelector(".share-close").addEventListener("click", () => {
+  sharePopup.style.display = "none";
+});
+
+// Tutup saat klik di luar popup (opsional)
+sharePopup.addEventListener("click", (e) => {
+  if (e.target === sharePopup) {
+    sharePopup.style.display = "none";
+  }
+});
+
+  // Tambahkan efek visual toggle
+  btn.classList.toggle("active");
+
+  favPopup.style.display = "flex";
 });
