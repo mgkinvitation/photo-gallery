@@ -103,7 +103,7 @@ favSignin.addEventListener("click", () => {
   })
   .catch((err) => {
     console.error("❌ Gagal kirim email:", err);
-    alert("Gagal mengirim email. Periksa koneksi.");
+    alert("Gagal mengirim email, Silahkan periksa koneksi internet anda.");
   });
 });
 
