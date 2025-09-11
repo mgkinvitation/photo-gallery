@@ -195,3 +195,42 @@ function startSlideshow() {
 function stopSlideshow() {
   closePopup();
 }
+
+function scrollToGallery() {
+  const header = document.getElementById("main-header");
+  if (header) {
+    header.scrollIntoView({ behavior: "smooth" });
+  }
+}
+
+const shareBtn = document.getElementById("btn-share");
+const sharePopup = document.getElementById("share-popup");
+const shareCloseBtn = document.getElementById("share-popup-close");
+const copyBtn = document.getElementById("copy-btn");
+const shareUrlInput = document.getElementById("share-url");
+
+shareBtn.addEventListener("click", () => {
+  sharePopup.style.display = "flex";
+});
+
+shareCloseBtn.addEventListener("click", () => {
+  sharePopup.style.display = "none";
+});
+
+copyBtn.addEventListener("click", () => {
+  shareUrlInput.select();
+  shareUrlInput.setSelectionRange(0, 99999); // Untuk mobile
+  document.execCommand("copy");
+  alert("Link disalin ke clipboard!");
+});
+
+// Optional: Klik di luar popup untuk menutup
+sharePopup.addEventListener("click", (e) => {
+  if (e.target === sharePopup) {
+    sharePopup.style.display = "none";
+  }
+});
+
+document.querySelector(".share-close").addEventListener("click", () => {
+  document.getElementById("share-popup").style.display = "none";
+});

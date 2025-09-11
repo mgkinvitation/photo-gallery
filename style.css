@@ -1,45 +1,85 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
 
 body {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Work Sans', 'Montserrat', sans-serif;
+}
+h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0.5em 0;
+}
+
+.album-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px 20px;
+  background-color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+}
+
+.album-header .album-cover {
+  width: 240px;              /* Sesuaikan ukuran portrait */
+  height: auto;              /* Biarkan tinggi menyesuaikan rasio gambar */
+  object-fit: cover;
+  border-radius: 10px;       /* Sudut membulat */
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.album-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
   margin: 0;
-  background: #f4f4f4;
+  letter-spacing: 1px;
+  color: #222;
+}
+
+.album-header .album-date {
+  font-size: 0.9rem;
+  color: #777;
+  margin-top: 8px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 header {
-  position: relative;
-  background: #1a73e8;
-  color: white;
-  padding: 1rem 2rem;
+  background: white;
+  color: #222;
+  padding: 2rem 0 1rem;
   text-align: center;
-  font-size: 2rem;
+  border-bottom: 1px solid #eee;
 }
 
 .toolbar {
-  position: absolute;
-  top: 50%;
-  right: 20px;
-  transform: translateY(-50%);
   display: flex;
-  gap: 10px;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
 }
 
 .toolbar button {
-  background: transparent;
+  background: none;
   border: none;
-  color: white;
-  font-size: 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  cursor: pointer;
-  transition: color 0.3s ease;
+  color: #333;
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
 }
 
 .toolbar button:hover {
-  color: #ffcc00;
+  color: #1a73e8;
 }
 
+.toolbar i {
+  font-size: 16px;
+  color: inherit;
+}
 
 .gallery {
   display: grid;
@@ -56,27 +96,29 @@ header {
 }
 
 .thumbnail {
-  width: 300px;
-  height: 200px;
-  object-fit: contain; /* ✅ ganti dari cover ke contain */
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  background-color: white; /* beri background agar ruang kosong terlihat rapi */
-  padding: 5px; /* beri sedikit jarak agar gambar tidak menempel */
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  padding: 0;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
 }
 
 /* Overlay effect */
 .thumb-overlay {
   position: absolute;
-  top: 5px;
-  right: 5px;
+  bottom: 10px;
+  right: 10px;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  gap: 8px;
   opacity: 0;
   transition: opacity 0.3s ease;
+}
+
+.thumb-wrapper {
+  position: relative;
+  display: inline-block;
 }
 
 .thumb-wrapper:hover .thumb-overlay {
@@ -84,23 +126,31 @@ header {
 }
 
 .thumb-btn {
-  background: rgba(0,0,0,0.6);
+  background: transparent; /* 🚫 Hilangkan latar putih */
   border: none;
-  color: white;
-  font-size: 1rem;
   padding: 6px;
   border-radius: 50%;
   cursor: pointer;
-  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: none; /* hilangkan bayangan */
+  transition: transform 0.2s ease;
 }
 
 .thumb-btn:hover {
-  background: rgba(255,255,255,0.8);
-  color: black;
+  background: transparent; /* tetap transparan saat hover */
+  transform: scale(1.1); /* kasih efek zoom kecil saat hover */
 }
 
-.thumbnail:hover {
-  transform: scale(1.05);
+.thumb-btn i {
+  font-size: 14px;
+  color: #ffffff;
+  transition: color 0.3s ease;
+}
+
+.thumb-btn:hover i {
+  color: #ffcc00; /* bisa ubah sesuai warna yang kamu mau */
 }
 
 /* Popup Modal */
@@ -295,3 +345,251 @@ header {
   cursor: pointer;
 }
 
+/* === Panah scroll ke bawah === */
+.scroll-down {
+  font-size: 2rem;
+  color: #333;
+  margin-top: 10px;
+  cursor: pointer;
+  animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+/* === Header Layout Flex === */
+header#main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.header-left h1 {
+  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  margin: 0;
+}
+
+.header-toolbar .toolbar {
+  justify-content: flex-end;
+}
+
+/* === Thumbnail jarak dikurangi === */
+.gallery {
+  gap: 10px; /* sebelumnya 15px */
+}
+
+/* === Album Header Styling === */
+.album-header {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.album-cover {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* Popup overlay */
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+/* Popup content */
+.popup-content {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90vw;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* Close button */
+.popup-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #444;
+}
+
+/* Share heading */
+.share-popup h3 {
+  margin-bottom: 20px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Share URL input and copy button */
+.share-link {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.share-link input {
+  flex: 1;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  user-select: all;
+}
+
+.share-link button {
+  padding: 10px 20px;
+  background: #333;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+/* Share icons container */
+.share-icons {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+/* Each share icon */
+.share-icon {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  text-decoration: none;
+  width: 50px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.share-icon img {
+  width: 32px;
+  height: 32px;
+  margin-bottom: 5px;
+  filter: grayscale(100%);
+  transition: filter 0.3s ease;
+}
+
+.share-icon:hover img {
+  filter: none;
+}
+
+.share-icon:hover {
+  color: #1a73e8; /* highlight color on hover */
+}
+
+.share-popup {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.share-popup-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  width: 400px;
+  text-align: center;
+  position: relative;
+}
+
+.share-url-box {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#share-url {
+  flex: 1;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+
+#copy-share-url {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  font-size: 14px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  cursor: pointer;
+}
+
+.share-icons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.share-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.share-icon i {
+  font-size: 24px;
+  margin-bottom: 5px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.share-icon:hover i {
+  transform: scale(1.2);
+  color: #007bff;
+}
+
+.share-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  color: #555;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.share-close:hover {
+  color: #000;
+}
