@@ -91,14 +91,6 @@ favSignin.addEventListener("click", () => {
     return;
   }
 
-  console.log('sending email to:', email);
-console.log('photo_name:', selectedPhoto ? selectedPhoto.name : '(none)');
-console.log('photo_url:', selectedPhoto ? selectedPhoto.url : '(none)');
-
-// opsional: buka URL di tab baru untuk cek cepat (hilangkan lagi setelah tes)
-// window.open(selectedPhoto.url, '_blank');
-
-
   emailjs.send("service_18z3kpe", "template_u78o5vi", {
     user_email: email,
     photo_name: selectedPhoto ? selectedPhoto.name : "(Tidak ada foto dipilih)",
