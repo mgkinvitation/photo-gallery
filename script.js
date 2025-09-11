@@ -65,7 +65,7 @@ document.querySelectorAll(".thumb-btn.fav").forEach(btn => {
     // ✅ Gunakan URL absolut agar bisa dibuka di email (misalnya di GitHub Pages)
     selectedPhoto = {
       name: img.alt,
-      url: new URL(img.dataset.full, window.location.origin).href
+      url: new URL(img.dataset.full, document.baseURI).href
     };
 
     favPopup.style.display = "flex";
@@ -90,6 +90,14 @@ favSignin.addEventListener("click", () => {
     alert("Masukkan email terlebih dahulu.");
     return;
   }
+
+  console.log('sending email to:', email);
+console.log('photo_name:', selectedPhoto ? selectedPhoto.name : '(none)');
+console.log('photo_url:', selectedPhoto ? selectedPhoto.url : '(none)');
+
+// opsional: buka URL di tab baru untuk cek cepat (hilangkan lagi setelah tes)
+// window.open(selectedPhoto.url, '_blank');
+
 
   emailjs.send("service_18z3kpe", "template_u78o5vi", {
     user_email: email,
