@@ -1,379 +1,138 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Photo Gallery</title>
-
-  <!-- Font & Icon -->
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+  <title>Stevi Event Project - Photo Gallery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
-
-  <!-- Ikon (Font Awesome) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("kYYvwVNbBupJ8pAXd"); // ganti dengan Public Key EmailJS
+      emailjs.init("kYYvwVNbBupJ8pAXd"); // ✅ ganti dengan Public Key kamu
     })();
   </script>
 </head>
 <body>
 
-<section class="album-header">
-  <img src="images/header.jpg" alt="Bayu" class="album-cover">
-  <h1>BAYU</h1>
-  <p class="album-date">25TH FEBRUARY, 2023</p>
-  
-  <!-- 🔽 Panah Scroll ke bawah -->
-  <div class="scroll-down" onclick="scrollToGallery()">
-    <i class="fa-solid fa-angle-down"></i>
+  <!-- Image Header -->
+  <div class="image-header">
+    <img src="images/header.jpg" alt="Header Image">
   </div>
-</section>
 
-<!-- Tambahkan id untuk target scroll -->
-<header id="main-header">
-  <div class="header-left">
+  <!-- Hero -->
+  <header class="hero">
     <h1>BAYU</h1>
-  </div>
-  <div class="header-toolbar">
-    <div class="toolbar">
-      <button id="btn-fav"><i class="fa-regular fa-heart"></i> FAVORITES</button>
-      <button id="btn-download"><i class="fa-solid fa-arrow-down"></i> DOWNLOAD</button>
-      <button id="btn-share"><i class="fa-solid fa-share-nodes"></i> SHARE</button>
-      <button id="btn-slideshow"><i class="fa-solid fa-play"></i> SLIDESHOW</button>
+    <p class="date">07TH SEPTEMBER, 2025</p>
+    <i class="fa-solid fa-angle-down scroll-icon"></i>
+  </header>
+
+  <!-- Toolbar -->
+  <section class="toolbar" id="toolbar">
+    <div class="toolbar-left">
+      <h2>BAYU</h2>
+      <span class="subtitle">stevi.eventproject</span>
     </div>
-  </div>
-</header>
-
-  <!-- GALLERY -->
-  <div class="gallery">
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8696.jpg" data-full="images/full/IMG_8696.jpg" alt="IMG_8696" class="thumbnail">
-        <div class="thumb-overlay">
-          <button class="thumb-btn fav" title="Add to Favorites">
-            <i class="fa-regular fa-heart"></i>
-          </button>
-          <button class="thumb-btn download" title="Download Photo">
-            <i class="fa-solid fa-arrow-down"></i>
-          </button>
-          <button class="thumb-btn share" title="Share Photo">
-            <i class="fa-solid fa-share-nodes"></i>
-          </button>
-        </div>
+    <div class="toolbar-right">
+      <button id="btn-fav"><i class="fa-regular fa-heart"></i> Favorites</button>
+      <button id="btn-download"><i class="fa-solid fa-download"></i> Download</button>
+      <button id="btn-share"><i class="fa-solid fa-share-nodes"></i> Share</button>
+      <button id="btn-slideshow"><i class="fa-solid fa-play"></i> Slideshow</button>
     </div>
+  </section>
 
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8720.jpg" data-full="images/full/IMG_8720.jpg" alt="IMG_8720" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+  <!-- Gallery -->
+  <section class="gallery">
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8696.jpg" alt="IMG_8696" class="thumbnail" data-full="images/full/IMG_8696.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8725.jpg" data-full="images/full/IMG_8725.jpg" alt="IMG_8725" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8720.jpg" alt="IMG_8720" class="thumbnail" data-full="images/full/IMG_8720.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8742.jpg" data-full="images/full/IMG_8742.jpg" alt="IMG_8742" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8725.jpg" alt="IMG_8725" class="thumbnail" data-full="images/full/IMG_8725.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8774.jpg" data-full="images/full/IMG_8774.jpg" alt="IMG_8774" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8742.jpg" alt="IMG_8742" class="thumbnail" data-full="images/full/IMG_8742.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8784.jpg" data-full="images/full/IMG_8784.jpg" alt="IMG_8784" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8774.jpg" alt="IMG_8774" class="thumbnail" data-full="images/full/IMG_8774.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8832.jpg" data-full="images/full/IMG_8832.jpg" alt="IMG_8832" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8784.jpg" alt="IMG_8784" class="thumbnail" data-full="images/full/IMG_8784.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8841.jpg" data-full="images/full/IMG_8841.jpg" alt="IMG_8841" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8832.jpg" alt="IMG_8832" class="thumbnail" data-full="images/full/IMG_8832.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8853.jpg" data-full="images/full/IMG_8853.jpg" alt="IMG_8853" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8841.jpg" alt="IMG_8841" class="thumbnail" data-full="images/full/IMG_8841.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8855.jpg" data-full="images/full/IMG_8855.jpg" alt="IMG_8855" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8853.jpg" alt="IMG_8853" class="thumbnail" data-full="images/full/IMG_8853.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8856.jpg" data-full="images/full/IMG_8856.jpg" alt="IMG_8856" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8855.jpg" alt="IMG_8855" class="thumbnail" data-full="images/full/IMG_8855.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8858.jpg" data-full="images/full/IMG_8858.jpg" alt="IMG_8858" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8856.jpg" alt="IMG_8856" class="thumbnail" data-full="images/full/IMG_8856.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8864.jpg" data-full="images/full/IMG_8864.jpg" alt="IMG_8864" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8858.jpg" alt="IMG_8858" class="thumbnail" data-full="images/full/IMG_8858.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8871.jpg" data-full="images/full/IMG_8871.jpg" alt="IMG_8871" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8864.jpg" alt="IMG_8864" class="thumbnail" data-full="images/full/IMG_8864.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8880.jpg" data-full="images/full/IMG_8880.jpg" alt="IMG_8880" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8871.jpg" alt="IMG_8871" class="thumbnail" data-full="images/full/IMG_8871.jpg">
     </div>
-
-    <div class="thumb-wrapper">
-      <img src="images/thumb/IMG_8881.jpg" data-full="images/full/IMG_8881.jpg" alt="IMG_8881" class="thumbnail">
-          <div class="thumb-overlay">
-            <button class="thumb-btn fav" title="Add to Favorites">
-              <i class="fa-regular fa-heart"></i>
-            </button>
-            <button class="thumb-btn download" title="Download Photo">
-              <i class="fa-solid fa-arrow-down"></i>
-            </button>
-            <button class="thumb-btn share" title="Share Photo">
-              <i class="fa-solid fa-share-nodes"></i>
-            </button>
-          </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8880.jpg" alt="IMG_8880" class="thumbnail" data-full="images/full/IMG_8880.jpg">
     </div>
+    <div class="thumbnail-wrapper">
+      <img src="images/thumb/IMG_8881.jpg" alt="IMG_8881" class="thumbnail" data-full="images/full/IMG_8881.jpg">
+    </div>
+  </section>
 
-  </div>
-
-  <!-- POPUP FOTO -->
+  <!-- Popup -->
   <div id="popup" class="popup">
-    <span class="close">&times;</span>
-    <span class="nav prev">&#10094;</span>
-    <img class="popup-content" id="popup-img">
-    <span class="nav next">&#10095;</span>
-    <div id="caption"></div>
+    <button class="nav prev">&#10094;</button>
+    <div class="popup-content">
+      <img id="popup-img" src="" alt="Popup Foto">
+      <div class="popup-toolbar">
+        <button id="popup-playpause"><i class="fa-solid fa-play"></i></button>
+        <button id="popup-download"><i class="fa-solid fa-download"></i></button>
+        <button id="popup-share"><i class="fa-solid fa-share-nodes"></i></button>
+        <button id="popup-fav"><i class="fa-regular fa-heart"></i></button>
+        <button id="popup-close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="progress-bar"><div class="progress-fill"></div></div>
+    </div>
+    <button class="nav next">&#10095;</button>
   </div>
 
-  <!-- POPUP FAVORITES -->
-  <div id="fav-popup" class="fav-popup">
-    <div class="fav-popup-content">
-      <span class="fav-popup-close">&times;</span>
-      <h2>Save Your Favorites</h2>
-      <p>Enter your email to save and revisit your favorite photos later.</p>
-
-      <input type="email" id="fav-email" placeholder="Your email" required>
-      <button id="fav-signin">Sign In</button>
-
-      <p class="tooltip-text">
-        Why do you need my email?
-        <span class="tooltip">
-          We use your email to save your favorite photos so you can come back and see them later.
-        </span>
+  <!-- FAVORITES POPUP -->
+  <div id="favorites-popup" class="favorites-popup">
+    <div class="favorites-popup-content">
+      <button class="favorites-close" id="favorites-close">&times;</button>
+      <h2>FAVORITES</h2>
+      <p>
+        Save your favorite photos and revisit them at anytime using your email address.
+        You can share this list with your photographer, family and friends.
       </p>
+      <input type="email" id="favorites-email" placeholder="Your email" />
+      <div class="favorites-actions">
+        <button id="favorites-submit">SIGN IN</button>
+      </div>
+      <small class="tooltip-wrapper">
+        <a href="#" class="tooltip-trigger">Why do you need my email?</a>
+        <span class="tooltip-text">
+          We ask for your email to remember your Favorites. Come back anytime and retrieve your Favorites using your email.
+        </span>
+      </small>
     </div>
   </div>
 
-  <!-- Share Popup Modal -->
-<div id="share-popup" class="share-popup">
-  <div class="share-popup-content">
-    <button class="share-close"><i class="fas fa-times"></i></button> <!-- Tombol X -->
-    
-    <h2>SHARE</h2>
-
-    <div class="share-url-box">
-      <input type="text" id="share-url" value="https://pixies.et/mV53K48Q" readonly>
-      <button id="copy-share-url">COPY</button>
-    </div>
-
-    <div class="share-icons">
-      <div class="share-icon">
-        <i class="fab fa-facebook-f"></i>
-        <span>Facebook</span>
-      </div>
-      <div class="share-icon">
-        <i class="fab fa-whatsapp"></i>
-        <span>WhatsApp</span>
-      </div>
-      <div class="share-icon">
-        <i class="fab fa-facebook-messenger"></i>
-        <span>Messenger</span>
-      </div>
-      <div class="share-icon">
-        <i class="fas fa-envelope"></i>
-        <span>Email</span>
-      </div>
-      <div class="share-icon">
-        <i class="fab fa-x-twitter"></i>
-        <span>X (Twitter)</span>
-      </div>
-      <div class="share-icon">
-        <i class="fab fa-pinterest-p"></i>
-        <span>Pinterest</span>
-      </div>
-      <div class="share-icon">
-        <i class="fab fa-threads"></i>
-        <span>Threads</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-    </div>
-  </div>
-</div>
-
-  <!-- JS -->
   <script src="script.js"></script>
 </body>
 </html>
