@@ -13,8 +13,41 @@
       emailjs.init("kYYvwVNbBupJ8pAXd"); // ✅ ganti dengan Public Key kamu
     })();
   </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 </head>
 <body>
+
+  <!-- Share Popup -->
+  <div class="share-popup" id="sharePopup">
+    <div class="share-popup-content">
+      <h2>SHARE</h2>
+
+      <!-- Input link + tombol copy -->
+      <div class="share-link">
+        <input type="text" id="shareLink" value="https://pixies.et/mV53K48Q" readonly>
+        <button id="copyBtn">COPY</button>
+      </div>
+
+      <!-- Ikon sosial -->
+      <div class="share-icons">
+        <a href="#" id="shareWhatsapp" target="_blank">
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp</span>
+        </a>
+        <a href="#" id="shareInstagram" target="_blank">
+          <i class="fab fa-instagram"></i>
+          <span>Instagram</span>
+        </a>
+        <a href="#" id="shareEmail" target="_blank">
+          <i class="fas fa-envelope"></i>
+          <span>Email</span>
+        </a>
+      </div>
+
+      <!-- Tombol close -->
+      <button class="share-close" id="closeShare">&times;</button>
+    </div>
+  </div>
 
   <!-- Image Header -->
   <div class="image-header">
@@ -101,9 +134,9 @@
       <img id="popup-img" src="" alt="Popup Foto">
       <div class="popup-toolbar">
         <button id="popup-playpause"><i class="fa-solid fa-play"></i></button>
-        <button id="popup-download"><i class="fa-solid fa-download"></i></button>
-        <button id="popup-share"><i class="fa-solid fa-share-nodes"></i></button>
         <button id="popup-fav"><i class="fa-regular fa-heart"></i></button>
+        <button id="popup-share"><i class="fa-solid fa-share-nodes"></i></button>
+        <button id="popup-download"><i class="fa-solid fa-download"></i></button>
         <button id="popup-close"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="progress-bar"><div class="progress-fill"></div></div>
@@ -130,6 +163,23 @@
           We ask for your email to remember your Favorites. Come back anytime and retrieve your Favorites using your email.
         </span>
       </small>
+    </div>
+  </div>
+
+  <!-- DOWNLOAD POPUP -->
+  <div id="download-popup" class="download-popup">
+    <div class="download-popup-content">
+      <button class="download-close" id="download-close">&times;</button>
+      <h2>DOWNLOAD PHOTO</h2>
+
+      <div class="download-options">
+        <button id="save-device" class="download-btn">
+          <i class="fa-solid fa-computer"></i> Save to My Device
+        </button>
+        <button id="save-google" class="download-btn">
+          <i class="fa-brands fa-google"></i> Save to Google Photos
+        </button>
+      </div>
     </div>
   </div>
 
