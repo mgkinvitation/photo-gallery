@@ -10,10 +10,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     (function(){
-      emailjs.init("kYYvwVNbBupJ8pAXd"); // ✅ ganti dengan Public Key kamu
+      emailjs.init("wfCaR74fpUMQbJZNq"); // ✅ ganti dengan Public Key kamu
     })();
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/favicon.png">
 </head>
 <body>
 
@@ -65,7 +67,7 @@
   <section class="toolbar" id="toolbar">
     <div class="toolbar-left">
       <h2>BAYU</h2>
-      <span class="subtitle">stevi.eventproject</span>
+      <span class="subtitle">@stevi.eventproject</span>
     </div>
     <div class="toolbar-right">
       <button id="btn-fav"><i class="fa-regular fa-heart"></i> Favorites</button>
@@ -76,7 +78,7 @@
   </section>
 
   <!-- Gallery -->
-  <section class="gallery">
+  <section class="gallery" id="gallery">
     <div class="thumbnail-wrapper">
       <img src="images/thumb/IMG_8696.jpg" alt="IMG_8696" class="thumbnail" data-full="images/full/IMG_8696.jpg">
     </div>
@@ -126,6 +128,9 @@
       <img src="images/thumb/IMG_8881.jpg" alt="IMG_8881" class="thumbnail" data-full="images/full/IMG_8881.jpg">
     </div>
   </section>
+
+  <!-- Pagination -->
+  <div class="pagination" id="pagination"></div>
 
   <!-- Popup -->
   <div id="popup" class="popup">
@@ -184,5 +189,67 @@
   </div>
 
   <script src="script.js"></script>
+
+  <!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-container">
+    
+    <!-- Brand -->
+    <div class="footer-brand">
+      <h2 class="footer-title">Stevi Event Project</h2>
+      <img src="images/logo_footer.png" alt="Stevi Event Project Logo" class="footer-logo">
+      <p>Capture your best moments, forever.</p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="footer-nav">
+      <h3>Explore</h3>
+      <ul>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#favorites-popup">Favorites</a></li>
+        <li><a href="#download-popup">Download</a></li>
+        <li><a href="#sharePopup">Share</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-contact">
+      <h3>Contact</h3>
+      <p><i class="fa-solid fa-envelope"></i> stevieventproject@gmail.com</p>
+      <p><i class="fa-solid fa-phone"></i> +62 812-3456-7890</p>
+    </div>
+
+    <!-- Social -->
+<div class="footer-social">
+  <h3>Follow Us</h3>
+  <div class="social-icons">
+    <a href="https://www.instagram.com/stevi.eventproject/" target="_blank" class="social-link">
+      <i class="fab fa-instagram"></i>
+      <span>Instagram</span>
+    </a>
+
+    <a href="#" target="_blank" class="social-link">
+      <i class="fab fa-tiktok"></i>
+      <span>TikTok</span>
+    </a>
+
+    <a href="https://wa.me/6281220009287" target="_blank" class="social-link">
+      <i class="fab fa-whatsapp"></i>
+      <span>Admin 1</span>
+    </a>
+
+    <a href="https://wa.me/6281389193368" target="_blank" class="social-link">
+      <i class="fab fa-whatsapp"></i>
+      <span>Admin 2</span>
+    </a>
+  </div>
+</div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Stevi Event Project. All rights reserved.</p>
+  </div>
+</footer>
+
 </body>
 </html>
