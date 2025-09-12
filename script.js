@@ -1,90 +1,100 @@
-// === GALERI & POPUP FOTO ===
-const thumbnails = document.querySelectorAll(".thumbnail");
+// --- GALLERY & POPUP ---
+const thumbnails = document.querySelectorAll(".thumbnail-wrapper img");
 const popup = document.getElementById("popup");
 const popupImg = document.getElementById("popup-img");
-const captionText = document.getElementById("caption");
-const closeBtn = document.querySelector(".close");
 const prevBtn = document.querySelector(".nav.prev");
 const nextBtn = document.querySelector(".nav.next");
+const closeBtn = document.getElementById("popup-close");
+const progressFill = document.querySelector(".progress-fill");
 
 let currentIndex = 0;
-let slideshowInterval = null;
-let selectedPhoto = null; // simpan foto yang dipilih user
+let slideInterval;
 
-function showImage(index) {
-  const img = thumbnails[index];
-  popupImg.src = img.dataset.full;
-  captionText.innerHTML = `Foto ${index + 1} / ${thumbnails.length} - ${img.alt}`;
+// Scroll ke toolbar saat panah diklik
+document.querySelector(".scroll-icon").addEventListener("click", () => {
+  document.getElementById("toolbar").scrollIntoView({ 
+    behavior: "smooth" 
+  });
+});
+
+
+function openPopup(index) {
+  currentIndex = index;
+  popup.style.display = "flex";
+  popupImg.src = thumbnails[index].dataset.full;
 }
 
 function closePopup() {
   popup.style.display = "none";
-  clearInterval(slideshowInterval);
-  slideshowInterval = null;
+  stopSlideshow();
 }
 
-function prevImage() {
-  if (currentIndex > 0) {
-    currentIndex--;
-    showImage(currentIndex);
-  } else {
-    closePopup();
-  }
+function showNextImage() {
+  currentIndex = (currentIndex + 1) % thumbnails.length;
+  popupImg.src = thumbnails[currentIndex].dataset.full;
 }
 
-function nextImage() {
-  if (currentIndex < thumbnails.length - 1) {
-    currentIndex++;
-    showImage(currentIndex);
-  } else {
-    closePopup();
-  }
+function showPrevImage() {
+  currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+  popupImg.src = thumbnails[currentIndex].dataset.full;
 }
 
-// Klik thumbnail → tampilkan popup foto
-thumbnails.forEach((img, index) => {
-  img.addEventListener("click", () => {
-    currentIndex = index;
-    popup.style.display = "block";
-    showImage(currentIndex);
+// Thumbnail click
+thumbnails.forEach((img, i) => {
+  img.addEventListener("click", () => openPopup(i));
+});
+
+nextBtn.addEventListener("click", showNextImage);
+prevBtn.addEventListener("click", showPrevImage);
+closeBtn.addEventListener("click", closePopup);
+
+// --- SLIDESHOW ---
+const playPauseBtn = document.getElementById("popup-playpause");
+
+function startSlideshow() {
+  stopSlideshow();
+  slideInterval = setInterval(() => {
+    showNextImage();
+    progressFill.style.width = "0%";
+    setTimeout(() => { progressFill.style.width = "100%"; }, 50);
+  }, 4000);
+  progressFill.style.transition = "width 4s linear";
+  progressFill.style.width = "100%";
+  playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+}
+
+function stopSlideshow() {
+  clearInterval(slideInterval);
+  progressFill.style.width = "0%";
+  playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+}
+
+playPauseBtn.addEventListener("click", () => {
+  if (slideInterval) stopSlideshow(); else startSlideshow();
+});
+
+// --- FAVORITES ---
+const favBtn = document.getElementById("btn-fav");
+const favPopup = document.getElementById("favorites-popup");
+const favPopupClose = document.getElementById("favorites-close");
+const favSubmit = document.getElementById("favorites-submit");
+const favEmailInput = document.getElementById("favorites-email");
+
+favBtn.addEventListener("click", () => favPopup.style.display = "flex");
+favPopupClose.addEventListener("click", () => favPopup.style.display = "none");
+
+// toggle favorite di thumbnail
+const thumbs = document.querySelectorAll(".thumbnail-wrapper");
+thumbs.forEach(thumb => {
+  thumb.addEventListener("click", e => {
+    if (e.target.classList.contains("favorite-icon")) {
+      thumb.classList.toggle("favorited");
+    }
   });
 });
 
-// === FAVORITES POPUP ===
-const favPopup = document.getElementById("fav-popup");
-const favPopupClose = document.querySelector(".fav-popup-close");
-const favSignin = document.getElementById("fav-signin");
-const favEmailInput = document.getElementById("fav-email");
-
-// Tombol favorites di setiap thumbnail
-document.querySelectorAll(".thumb-btn.fav").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const img = btn.closest(".thumb-wrapper").querySelector(".thumbnail");
-
-    // ✅ Gunakan URL absolut agar bisa dibuka di email (misalnya di GitHub Pages)
-    selectedPhoto = {
-      name: img.alt,
-      url: new URL(img.dataset.full, document.baseURI).href
-    };
-
-    favPopup.style.display = "flex";
-  });
-});
-
-// Tombol favorites di toolbar (tanpa foto)
-document.getElementById("btn-fav").addEventListener("click", () => {
-  selectedPhoto = null;
-  favPopup.style.display = "flex";
-});
-
-// Tutup popup hanya dengan tombol X
-favPopupClose.addEventListener("click", () => {
-  favPopup.style.display = "none";
-});
-
-// Tombol SIGN IN → Kirim email via EmailJS
-favSignin.addEventListener("click", () => {
+// EmailJS submit
+favSubmit.addEventListener("click", () => {
   const email = favEmailInput.value.trim();
   if (!email) {
     alert("Masukkan email terlebih dahulu.");
@@ -93,9 +103,8 @@ favSignin.addEventListener("click", () => {
 
   emailjs.send("service_18z3kpe", "template_u78o5vi", {
     user_email: email,
-    photo_name: selectedPhoto ? selectedPhoto.name : "(Tidak ada foto dipilih)",
-    photo_url: selectedPhoto ? selectedPhoto.url : "",
-  })
+    message: "User ingin simpan daftar foto favorit."
+  }, "kYYvwVNbBupJ8pAXd")
   .then(() => {
     alert("✅ Email terkirim ke " + email);
     favPopup.style.display = "none";
@@ -103,161 +112,13 @@ favSignin.addEventListener("click", () => {
   })
   .catch((err) => {
     console.error("❌ Gagal kirim email:", err);
-    alert("Gagal mengirim email, Silahkan periksa koneksi internet anda.");
+    alert("Gagal mengirim email, coba lagi.");
   });
 });
 
-// === DOWNLOAD & SHARE BUTTONS DI THUMBNAIL ===
-document.querySelectorAll(".thumb-btn.download").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const img = btn.closest(".thumb-wrapper").querySelector(".thumbnail");
-    const link = document.createElement("a");
-    link.href = img.dataset.full;
-    link.download = img.alt.replace(/\s+/g, "_") + ".jpg";
-    link.click();
+// Scroll ke toolbar saat panah diklik
+document.querySelector(".scroll-icon").addEventListener("click", () => {
+  document.getElementById("toolbar").scrollIntoView({
+    behavior: "smooth"
   });
-});
-
-document.querySelectorAll(".thumb-btn.share").forEach(btn => {
-  btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const img = btn.closest(".thumb-wrapper").querySelector(".thumbnail");
-    if (navigator.share) {
-      navigator.share({
-        title: img.alt,
-        url: img.dataset.full
-      }).catch(() => alert("Gagal membagikan."));
-    } else {
-      navigator.clipboard.writeText(img.dataset.full);
-      alert("Link foto disalin ke clipboard!");
-    }
-  });
-});
-
-// === POPUP FOTO NAVIGASI ===
-closeBtn.addEventListener("click", () => closePopup());
-prevBtn.addEventListener("click", prevImage);
-nextBtn.addEventListener("click", nextImage);
-
-document.addEventListener("keydown", (e) => {
-  if (popup.style.display !== "block") return;
-  if (e.key === "ArrowLeft") prevImage();
-  if (e.key === "ArrowRight") nextImage();
-  if (e.key === "Escape") closePopup();
-});
-
-// Klik background popup tidak menutup foto
-popup.addEventListener("click", (e) => {
-  if (e.target === popupImg || e.target.classList.contains("nav")) return;
-});
-
-// === TOOLBAR BUTTONS ===
-document.getElementById("btn-download").addEventListener("click", () => {
-  if (!popupImg.src) return alert("Buka foto dulu.");
-  const link = document.createElement("a");
-  link.href = popupImg.src;
-  link.download = `foto-${currentIndex + 1}.jpg`;
-  link.click();
-});
-
-document.getElementById("btn-share").addEventListener("click", () => {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(window.location.href);
-    // alert("Link halaman disalin!"); // alert dihapus
-  } else {
-    alert("Browser tidak mendukung clipboard.");
-  }
-});
-
-document.getElementById("btn-slideshow").addEventListener("click", () => {
-  if (slideshowInterval) {
-    stopSlideshow();
-  } else {
-    currentIndex = 0;
-    startSlideshow();
-  }
-});
-
-function startSlideshow() {
-  popup.style.display = "block";
-  showImage(currentIndex);
-  slideshowInterval = setInterval(() => {
-    if (currentIndex < thumbnails.length - 1) {
-      currentIndex++;
-      showImage(currentIndex);
-    } else {
-      stopSlideshow();
-    }
-  }, 3000);
-}
-
-function stopSlideshow() {
-  closePopup();
-}
-
-function scrollToGallery() {
-  const header = document.getElementById("main-header");
-  if (header) {
-    header.scrollIntoView({ behavior: "smooth" });
-  }
-}
-
-const shareBtn = document.getElementById("btn-share");
-const sharePopup = document.getElementById("share-popup");
-const shareCloseBtn = document.getElementById("share-popup-close");
-const copyBtn = document.getElementById("copy-btn");
-const shareUrlInput = document.getElementById("share-url");
-
-shareBtn.addEventListener("click", () => {
-  sharePopup.style.display = "flex";
-});
-
-shareCloseBtn.addEventListener("click", () => {
-  sharePopup.style.display = "none";
-});
-
-copyBtn.addEventListener("click", () => {
-  shareUrlInput.select();
-  shareUrlInput.setSelectionRange(0, 99999); // Untuk mobile
-  document.execCommand("copy");
-  alert("Link disalin ke clipboard!");
-});
-
-// Optional: Klik di luar popup untuk menutup
-sharePopup.addEventListener("click", (e) => {
-  if (e.target === sharePopup) {
-    sharePopup.style.display = "none";
-  }
-});
-
-document.querySelector(".share-close").addEventListener("click", () => {
-  document.getElementById("share-popup").style.display = "none";
-});
-
-btn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  const img = btn.closest(".thumb-wrapper").querySelector(".thumbnail");
-
-  selectedPhoto = {
-    name: img.alt,
-    url: new URL(img.dataset.full, document.baseURI).href
-  };
-
-  // Tutup saat klik tombol X
-document.querySelector(".share-close").addEventListener("click", () => {
-  sharePopup.style.display = "none";
-});
-
-// Tutup saat klik di luar popup (opsional)
-sharePopup.addEventListener("click", (e) => {
-  if (e.target === sharePopup) {
-    sharePopup.style.display = "none";
-  }
-});
-
-  // Tambahkan efek visual toggle
-  btn.classList.toggle("active");
-
-  favPopup.style.display = "flex";
 });
