@@ -1,677 +1,374 @@
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-
 body {
-  font-family: 'Work Sans', 'Montserrat', sans-serif;
-}
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 0.5em 0;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: #fff;
+  color: #111;
 }
 
-.album-header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px 20px;
-  background-color: #fff;
-  font-family: 'Montserrat', sans-serif;
+/* Hero */
+.hero {
   text-align: center;
+  padding: 1rem 1rem;
+  margin-top: -0.5rem;
 }
-
-.album-header .album-cover {
-  width: 240px;              /* Sesuaikan ukuran portrait */
-  height: auto;              /* Biarkan tinggi menyesuaikan rasio gambar */
-  object-fit: cover;
-  border-radius: 10px;       /* Sudut membulat */
-  margin-bottom: 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-}
-
-.album-header h1 {
+.hero h1 {
   font-size: 2.5rem;
   font-weight: 700;
-  margin: 0;
-  letter-spacing: 1px;
-  color: #222;
+  letter-spacing: 2px;
+  margin-bottom: 0.3rem;
 }
-
-.album-header .album-date {
+.hero .date {
   font-size: 0.9rem;
-  color: #777;
-  margin-top: 8px;
-  letter-spacing: 1px;
-  text-transform: uppercase;
+  color: #555;
+  margin: 0;
+}
+.scroll-icon {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  color: #333;
 }
 
-header {
-  background: white;
-  color: #222;
-  padding: 2rem 0 1rem;
+/* Image Header */
+.image-header {
   text-align: center;
-  border-bottom: 1px solid #eee;
+  margin: 2rem 0 1rem;
+}
+.image-header img {
+  max-width: 60%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
+/* Toolbar */
 .toolbar {
   display: flex;
-  gap: 20px;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
+  flex-wrap: wrap;
+  padding: 1rem 2rem;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
-
-.toolbar button {
+.toolbar-left h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+.toolbar-left .subtitle {
+  font-size: 0.8rem;
+  color: #666;
+}
+.toolbar-right button {
   background: none;
   border: none;
-  color: #333;
-  font-weight: 500;
-  text-transform: uppercase;
+  margin-left: 1rem;
   font-size: 0.85rem;
-  letter-spacing: 1px;
+  cursor: pointer;
+  color: #444;
+}
+.toolbar-right button i {
+  margin-right: 5px;
+}
+.toolbar-right button:hover {
+  color: #000;
 }
 
-.toolbar button:hover {
-  color: #1a73e8;
-}
-
-.toolbar i {
-  font-size: 16px;
-  color: inherit;
-}
-
+/* Gallery */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 15px;
-  padding: 20px;
-  justify-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 5px;
+  padding: 5px;
 }
-
-.thumb-wrapper {
+.thumbnail-wrapper {
   position: relative;
   display: inline-block;
-  margin: 10px;
 }
-
-.thumbnail {
+.gallery img {
   width: 100%;
-  height: 220px;
-  object-fit: cover;
-  border-radius: 8px;
-  padding: 0;
-  background: #fff;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
-
-/* Overlay effect */
-.thumb-overlay {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  display: flex;
-  gap: 8px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.thumb-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.thumb-wrapper:hover .thumb-overlay {
-  opacity: 1;
-}
-
-.thumb-btn {
-  background: transparent; /* 🚫 Hilangkan latar putih */
-  border: none;
-  padding: 6px;
-  border-radius: 50%;
+  height: auto;
+  display: block;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: none; /* hilangkan bayangan */
-  transition: transform 0.2s ease;
+  border-radius: 6px;
+  transition: transform 0.2s ease-in-out;
+}
+.gallery img:hover {
+  transform: scale(1.02);
+}
+.favorite-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 20px;
+  color: white;
+  text-shadow: 0 0 5px black;
+  cursor: pointer;
+  display: none;
+}
+.thumbnail-wrapper.favorited .favorite-icon {
+  display: block;
+  color: red;
 }
 
-.thumb-btn:hover {
-  background: transparent; /* tetap transparan saat hover */
-  transform: scale(1.1); /* kasih efek zoom kecil saat hover */
-}
-
-.thumb-btn i {
-  font-size: 14px;
-  color: #ffffff;
-  transition: color 0.3s ease;
-}
-
-.thumb-btn:hover i {
-  color: #ffcc00; /* bisa ubah sesuai warna yang kamu mau */
-}
-
-/* Popup Modal */
+/* Popup */
 .popup {
   display: none;
   position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
   z-index: 1000;
-  padding-top: 50px;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden; /* supaya scroll hilang */
-  background-color: rgba(0, 0, 0, 0.9);
-  text-align: center;
 }
-
 .popup-content {
-  display: block;
-  margin: auto;
-  max-width: 80%;
-  max-height: 80%;
-  border-radius: 10px;
-  animation: zoom 0.3s ease;
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-
-/* Tombol Panah */
-.nav {
+.popup img {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 8px;
+}
+.popup .nav {
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
-  font-size: 3rem;
-  font-weight: bold;
+  font-size: 2rem;
+  background: rgba(0,0,0,0.5);
   color: white;
+  border: none;
   cursor: pointer;
-  user-select: none;
   padding: 10px;
-  transition: 0.3s ease;
+  border-radius: 50%;
 }
-
-.nav:hover {
-  color: #ffcc00;
-}
-
-.nav.prev {
-  left: 20px;
-}
-
-.nav.next {
-  right: 20px;
-}
-
-@keyframes zoom {
-  from {transform: scale(0.5);}
-  to {transform: scale(1);}
-}
-
-/* Close Button */
-.close {
+.popup .nav.prev { left: 20px; }
+.popup .nav.next { right: 20px; }
+.popup-toolbar {
   position: absolute;
-  top: 20px;
-  right: 35px;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 10px;
+}
+.popup-toolbar button {
+  background: rgba(0,0,0,0.6);
+  border: none;
   color: white;
-  font-size: 3rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s ease;
-}
-
-.close:hover {
-  color: #ff0000;
-}
-
-#caption {
-  color: #ccc;
   font-size: 1.2rem;
-  margin-top: 10px;
-  text-align: center;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.popup-toolbar button:hover {
+  background: rgba(255,255,255,0.3);
+}
+/* Progress bar */
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 2px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.progress-fill {
+  width: 0%;
+  height: 100%;
+  background: #fff;
+  transition: width linear;
 }
 
-/* Popup Favorites */
-.popup-fav {
+/* Favorites Popup */
+.favorites-popup {
   display: none;
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.7);
+  inset: 0;
+  background: rgba(0,0,0,0.6);
   z-index: 2000;
   justify-content: center;
   align-items: center;
 }
-
-.popup-fav .popup-content {
-  background: white;
-  padding: 20px;
-  width: 350px;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-.popup-fav input {
-  width: 90%;
-  padding: 8px;
-  margin: 15px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-#fav-signin {
-  background: #333;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-#fav-signin:hover {
-  background: #555;
-}
-
-/* Tooltip untuk Why */
-.why-wrapper {
+.favorites-popup-content {
   position: relative;
-  font-size: 0.85rem;
-  color: #555;
-  cursor: pointer;
-  margin-bottom: 10px;
+  background: #fff;
+  padding: 2rem;
+  width: 380px;
+  max-width: 90%;
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  text-align: left;
 }
-
-.tooltip-text {
+.favorites-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: #555;
+}
+.favorites-popup-content h2 {
+  margin: 0 0 0.75rem;
+  font-size: 18px;
+  font-weight: 700;
+}
+.favorites-popup-content p {
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+.favorites-popup-content input[type="email"] {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  margin-bottom: 1rem;
+  outline: none;
+  border-radius: 2px;
+}
+.favorites-actions button {
+  background: #222;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+}
+.favorites-actions button:hover {
+  background: #000;
+}
+.tooltip-wrapper {
   position: relative;
   display: inline-block;
-  cursor: help;
-  color: #007bff;
-  font-size: 14px;
-  margin-top: 10px;
-  display: block;
+  font-size: 12px;
+  color: #555;
 }
-
-.tooltip {
+.tooltip-wrapper a {
+  color: #555;
+  text-decoration: none;
+}
+.tooltip-wrapper a:hover {
+  text-decoration: underline;
+}
+.tooltip-text {
   visibility: hidden;
-  width: 220px;
-  background-color: #333;
+  opacity: 0;
+  width: 260px;
+  background: #000;
   color: #fff;
   text-align: left;
-  border-radius: 5px;
-  padding: 10px;
+  padding: 8px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  line-height: 1.3;
   position: absolute;
-  z-index: 10000;
-
-  /* ✅ tampil di bawah text */
-  top: 125%;
-  left: 50%;
-  transform: translateX(-50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  bottom: 130%;
+  left: 0;
+  z-index: 2100;
+  transition: opacity 0.2s ease;
 }
-
-.tooltip-text:hover .tooltip {
+.tooltip-wrapper:hover .tooltip-text {
   visibility: visible;
   opacity: 1;
+  bottom: 110%;
 }
 
-.fav-popup {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0,0,0,0.5);
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
-
-.fav-popup-content {
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 300px;
-  position: relative;
-  text-align: center;
-}
-
-.fav-popup-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* === Panah scroll ke bawah === */
-.scroll-down {
+.scroll-icon {
   font-size: 2rem;
-  color: #333;
-  margin-top: 10px;
+  color: #fff;
+  margin-top: 20px;
   cursor: pointer;
   animation: bounce 2s infinite;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
-}
-
-/* === Header Layout Flex === */
-header#main-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem 2rem;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
-}
-
-.header-left h1 {
-  font-size: 2rem;
-  font-family: 'Montserrat', sans-serif;
-  margin: 0;
-}
-
-.header-toolbar .toolbar {
-  justify-content: flex-end;
-}
-
-/* === Thumbnail jarak dikurangi === */
-.gallery {
-  gap: 10px; /* sebelumnya 15px */
-}
-
-/* === Album Header Styling === */
-.album-header {
-  text-align: center;
-  margin-bottom: 0;
-}
-
-.album-cover {
-  width: 100%;
-  max-width: 800px;
-  height: auto;
-  border-radius: 10px;
-  display: block;
-  margin: 0 auto;
-}
-
-/* Popup overlay */
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-}
-
-/* Popup content */
-.popup-content {
-  background: #fff;
-  padding: 30px 40px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 90vw;
-  position: relative;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-/* Close button */
-.popup-close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 24px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #444;
-}
-
-/* Share heading */
-.share-popup h3 {
-  margin-bottom: 20px;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-/* Share URL input and copy button */
-.share-link {
-  display: flex;
-  gap: 10px;
-  margin-bottom: 25px;
-}
-
-.share-link input {
-  flex: 1;
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  user-select: all;
-}
-
-.share-link button {
-  padding: 10px 20px;
-  background: #333;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-weight: 600;
-  border-radius: 4px;
-}
-
-/* Share icons container */
-.share-icons {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 15px;
-}
-
-/* Each share icon */
-.share-icon {
-  text-align: center;
-  font-size: 12px;
-  color: #666;
-  text-decoration: none;
-  width: 50px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.share-icon img {
-  width: 32px;
-  height: 32px;
-  margin-bottom: 5px;
-  filter: grayscale(100%);
-  transition: filter 0.3s ease;
-}
-
-.share-icon:hover img {
-  filter: none;
-}
-
-.share-icon:hover {
-  color: #1a73e8; /* highlight color on hover */
-}
-
-.share-popup {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 9999;
-  justify-content: center;
-  align-items: center;
-}
-
-.share-popup-content {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  width: 400px;
-  text-align: center;
-  position: relative;
-}
-
-.share-url-box {
-  display: flex;
-  margin-bottom: 20px;
-}
-
-#share-url {
-  flex: 1;
-  padding: 8px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-top-left-radius: 6px;
-  border-bottom-left-radius: 6px;
-}
-
-#copy-share-url {
-  background: #000;
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  font-size: 14px;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
-  cursor: pointer;
-}
-
-.share-icons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.share-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  color: #333;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.share-icon i {
-  font-size: 24px;
-  margin-bottom: 5px;
-  transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.share-icon:hover i {
+.scroll-icon:hover {
+  color: #ff6b6b;
   transform: scale(1.2);
-  color: #007bff;
 }
 
-.share-close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  color: #555;
+/* Animasi bounce */
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(10px);
+  }
+  60% {
+    transform: translateY(5px);
+  }
+}
+
+.scroll-icon {
+  font-size: 2rem;
+  color: #fff;
+  margin-top: 20px;
   cursor: pointer;
-  transition: color 0.2s ease;
+  animation: bounce 2s infinite;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.share-close:hover {
-  color: #000;
+.scroll-icon:hover {
+  color: #ff6b6b;
+  transform: scale(1.2);
 }
 
-.thumb-btn.fav.active i {
-  color: #ff4d4f; /* Warna merah cinta */
+/* Bounce animasi halus, icon tetap terlihat */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
 }
 
-.share-popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  background: rgba(0, 0, 0, 0.6);
-  z-index: 999;
-}
-
-.share-popup-content {
-  background: #fff;
-  padding: 20px 30px;
-  border-radius: 8px;
-  width: 90%;
-  max-width: 500px;
-  position: relative;
-  text-align: center;
-}
-
-.share-close {
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  background: none;
-  border: none;
-  font-size: 24px;
+/* Scroll Icon */
+.scroll-icon {
+  font-size: 2rem;
+  color: #333;
+  margin-top: 20px;
   cursor: pointer;
+  animation: bounce 2s infinite;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
-.share-url-box {
-  display: flex;
-  margin: 20px 0;
-  justify-content: center;
+.scroll-icon:hover {
+  color: #ff6b6b;
+  transform: scale(1.2);
 }
 
-.share-url-box input {
-  flex: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-right: none;
-  border-radius: 4px 0 0 4px;
+/* Bounce animasi - tetap terlihat */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(10px);
+  }
 }
 
-.share-url-box button {
-  padding: 8px 16px;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 0 4px 4px 0;
-  cursor: pointer;
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 { font-size: 2rem; }
+  .toolbar { flex-direction: column; text-align: center; }
+  .toolbar-right { margin-top: 0.5rem; }
 }
-
-.share-icons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-}
-
-.share-icon {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 80px;
-  font-size: 14px;
-  cursor: pointer;
-  color: #444;
-}
-
-.share-icon i {
-  font-size: 24px;
-  margin-bottom: 5px;
+@media (max-width: 600px) {
+  .image-header img { max-width: 90%; }
 }
