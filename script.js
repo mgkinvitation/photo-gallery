@@ -21,6 +21,11 @@ function openPopup(index) {
   currentIndex = index;
   popup.style.display = "flex";
   popupImg.src = thumbnails[index].dataset.full;
+
+  // progress bar hanya aktif kalau slideshow sedang jalan
+  if (isPlaying) {
+    setTimeout(() => resetProgressBar(), 200);
+  }
 }
 
 function closePopup() {
@@ -31,11 +36,19 @@ function closePopup() {
 function showNextImage() {
   currentIndex = (currentIndex + 1) % thumbnails.length;
   popupImg.src = thumbnails[currentIndex].dataset.full;
+
+  if (isPlaying) {
+    setTimeout(() => resetProgressBar(), 200);
+  }
 }
 
 function showPrevImage() {
   currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
   popupImg.src = thumbnails[currentIndex].dataset.full;
+
+  if (isPlaying) {
+    setTimeout(() => resetProgressBar(), 200);
+  }
 }
 
 // Thumbnail click
@@ -51,19 +64,26 @@ closeBtn.addEventListener("click", closePopup);
 const playPauseBtn = document.getElementById("popup-playpause");
 const closeSlideshowBtn = document.getElementById("popup-close"); // tombol X close
 
+function resetProgressBar() {
+  progressFill.style.transition = "none";
+  progressFill.style.width = "0%";
+
+  setTimeout(() => {
+    progressFill.style.transition = "width 4s linear";
+    progressFill.style.width = "100%";
+  }, 50);
+}
+
 function startSlideshow() {
   stopSlideshow(); // biar gak dobel interval
   isPlaying = true;
+
+  resetProgressBar();
+
   slideInterval = setInterval(() => {
     showNextImage();
-    progressFill.style.width = "0%";
-    setTimeout(() => {
-      progressFill.style.width = "100%";
-    }, 50);
   }, 4000);
 
-  progressFill.style.transition = "width 4s linear";
-  progressFill.style.width = "100%";
   playPauseBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
 }
 
@@ -153,11 +173,11 @@ favSubmit.addEventListener("click", () => {
   const photoName = photoPath.split("/").pop().split(".")[0];
   const photoUrl = baseUrl + photoPath;
 
-  emailjs.send("service_18z3kpe", "template_u78o5vi", {
+  emailjs.send("service_v2rmo45", "template_g3fq6mb", {
     user_email: email,
     photo_name: photoName,
     photo_url: photoUrl
-  }, "kYYvwVNbBupJ8pAXd")
+  }, "wfCaR74fpUMQbJZNq")
   .then(() => {
     alert("✅ Email terkirim ke " + email);
     favPopup.style.display = "none";
@@ -292,4 +312,77 @@ if (saveGoogleBtn) {
 
     downloadPopup.style.display = "none"; 
   });
+}
+
+// --- Pagination ---
+const galleryContainer = document.getElementById("gallery");
+const paginationContainer = document.getElementById("pagination");
+
+const allPhotos = Array.from(document.querySelectorAll(".thumbnail-wrapper"));
+const itemsPerPage = 15; // ✅ batas per halaman
+let currentPage = 1;
+
+function renderGallery(page) {
+  galleryContainer.innerHTML = "";
+
+  const start = (page - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const paginatedItems = allPhotos.slice(start, end);
+
+  paginatedItems.forEach(item => galleryContainer.appendChild(item));
+
+  // update thumbnails sesuai halaman
+  thumbnailsPage = galleryContainer.querySelectorAll("img");
+
+  thumbnailsPage.forEach((img, i) => {
+    img.addEventListener("click", () => openPopup(start + i));
+  });
+}
+
+function renderPagination() {
+  paginationContainer.innerHTML = "";
+  const totalPages = Math.ceil(allPhotos.length / itemsPerPage);
+
+  // Tombol Prev
+  if (currentPage > 1) {
+    const prevBtn = document.createElement("button");
+    prevBtn.textContent = "Prev";
+    prevBtn.addEventListener("click", () => {
+      currentPage--;
+      renderGallery(currentPage);
+      renderPagination();
+    });
+    paginationContainer.appendChild(prevBtn);
+  }
+
+  // Tombol angka halaman
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement("button");
+    btn.textContent = i;
+    if (i === currentPage) btn.classList.add("active");
+    btn.addEventListener("click", () => {
+      currentPage = i;
+      renderGallery(currentPage);
+      renderPagination();
+    });
+    paginationContainer.appendChild(btn);
+  }
+
+  // Tombol Next
+  if (currentPage < totalPages) {
+    const nextBtn = document.createElement("button");
+    nextBtn.textContent = "Next";
+    nextBtn.addEventListener("click", () => {
+      currentPage++;
+      renderGallery(currentPage);
+      renderPagination();
+    });
+    paginationContainer.appendChild(nextBtn);
+  }
+}
+
+// --- Init Pagination ---
+if (galleryContainer && paginationContainer) {
+  renderGallery(currentPage);
+  renderPagination();
 }
