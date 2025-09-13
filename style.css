@@ -131,11 +131,17 @@ body {
   flex-direction: column;
   align-items: center;
 }
-.popup img {
+.popup img, 
+#popup-img {
   max-width: 100%;
-  max-height: 80vh;
-  border-radius: 8px;
+  max-height: 90vh;     /* agar sesuai layar */
+  object-fit: contain;  /* ✅ tampil full, tidak terpotong */
+  display: block;
+  margin: auto;
+  border-radius: 10px;
+  background: #000;     /* opsional, biar ada frame hitam */
 }
+
 /* Popup Navigasi */
 .popup .nav {
   position: absolute;
@@ -158,15 +164,13 @@ body {
 }
 /* ✅ Tambahkan ini */
 /* Toolbar di dalam popup */
-/* Toolbar di dalam popup */
 .popup-toolbar {
-  position: fixed;       /* ✅ selalu ikut viewport, bukan gambar */
-  bottom: 20px;          /* jarak dari bawah layar */
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;     /* ✅ jangan absolute, biar ikut alur flex di bawah gambar */
+  margin-top: 12px;       /* jarak dari bawah gambar */
   display: flex;
-  flex-direction: row;   /* horizontal */
+  flex-direction: row;
   gap: 20px;
+  justify-content: center;
   z-index: 2001;
 }
 
@@ -186,16 +190,16 @@ body {
 
 /* Progress bar */
 .progress-bar {
-  position: fixed;        /* ✅ biar posisinya fix, tidak ikut tombol */
-  bottom: 10px;           /* ✅ jarak dari bawah layar */
+  position: absolute;   /* ✅ ikut kontainer popup-content */
+  bottom: -20px;        /* sedikit di bawah tombol */
   left: 50%;
   transform: translateX(-50%);
-  width: 80%;             /* ✅ lebih lebar */
+  width: 80%;
   height: 4px;
   background: rgba(255,255,255,0.2);
   border-radius: 2px;
   overflow: hidden;
-  z-index: 2002;          /* ✅ di bawah tombol, tapi tetap terlihat */
+  z-index: 2000;
 }
 
 .progress-fill {
@@ -405,9 +409,12 @@ body {
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.6);
-  z-index: 3000;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
+}
+.share-popup.active {
+  display: flex;
 }
 
 .share-popup-content {
@@ -704,3 +711,363 @@ body {
   transform: translateY(-2px);
 }
 
+/* Main content sembunyi dulu */
+#main-content {
+  display: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+/* Saat ditampilkan */
+#main-content.show {
+  display: block;
+  opacity: 1;
+}
+
+/* ===== ADD: initial hide main content + fade-in ===== */
+#main-content{
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: max-height 450ms ease, opacity 450ms ease, transform 450ms ease;
+  pointer-events: none; /* non-interactive saat tersembunyi */
+}
+
+#main-content.show{
+  max-height: 5000px; /* cukup besar untuk menampung gallery */
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* pastikan hero/scroll-icon tetap di atas */
+.hero { position: relative; z-index: 60; }
+.scroll-icon { position: relative; z-index: 70; cursor: pointer; }
+
+/* ✅ Tambahkan khusus untuk popup share */
+#popupshare {
+  display: flex;
+  justify-content: center;  /* ikon rata tengah horizontal */
+  align-items: center;      /* ikon rata tengah vertical */
+  gap: 30px;                /* jarak antar ikon */
+  margin-top: 20px;
+}
+
+#popupshare a {
+  text-decoration: none;
+  color: #333;
+  font-size: 2rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#popupshare a:hover {
+  transform: scale(1.2);
+  color: #ff6b6b; /* efek hover */
+}
+
+/* Share Popup Icons */
+#popupshare {
+  display: flex;
+  justify-content: center;   /* rata tengah horizontal */
+  align-items: center;
+  gap: 40px;                 /* jarak antar kolom ikon */
+  margin-top: 20px;
+}
+
+#popupshare a {
+  display: flex;
+  flex-direction: column;    /* ikon di atas, teks di bawah */
+  align-items: center;       /* posisi rata tengah */
+  text-decoration: none;
+  color: #333;
+  font-size: 2rem;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+#popupshare a i {
+  font-size: 2.5rem;
+  margin-bottom: 8px;       /* jarak ikon ke teks */
+}
+
+#popupshare a span {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  text-align: center;
+}
+
+#popupshare a:hover {
+  transform: scale(1.2);
+  color: #ff6b6b;
+}
+
+/* === HAMBURGER MENU === */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #fff;
+}
+
+/* Responsive toolbar */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+    margin-left: auto;
+    margin-right: 15px;
+  }
+
+  .toolbar-right {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; /* tinggi toolbar */
+    right: 10px;
+    width: 200px;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 10px;
+    border-radius: 8px;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease;
+  }
+
+  .toolbar-right.active {
+    display: flex;
+  }
+
+  .toolbar-right button {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    border: none;
+    background: none;
+    color: #fff;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Default: sembunyiin tombol hamburger */
+.hamburger {
+  display: none;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Saat mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block;
+  }
+  #toolbar-buttons {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background: #fff;
+    padding: 10px;
+    position: absolute;
+    top: 50px; /* di bawah toolbar */
+    right: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    border-radius: 8px;
+  }
+  #toolbar-buttons.active {
+    display: flex;
+  }
+}
+
+/* Default desktop */
+#toolbar-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.hamburger {
+  display: none; /* sembunyikan hamburger di desktop */
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .hamburger {
+    display: block; /* tampilkan hamburger di mobile */
+  }
+
+  #toolbar-buttons {
+    display: none; /* sembunyikan menu */
+    flex-direction: column;
+    gap: 10px;
+    background: #fff;
+    padding: 15px;
+    position: absolute;
+    top: 60px;   /* turun sedikit di bawah toolbar */
+    right: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 8px;
+    min-width: 180px;
+    z-index: 1000;
+  }
+
+  #toolbar-buttons.active {
+    display: flex; /* munculkan saat hamburger diklik */
+  }
+
+  #toolbar-buttons button {
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    border: none;
+    background: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #333;
+  }
+
+  #toolbar-buttons button:hover {
+    background: #f5f5f5;
+  }
+}
+
+#toolbar-buttons .close-hamburger {
+  background: none;
+  border: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  align-self: flex-end;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+/* ===========================
+   FIX: mobile scroll -> footer
+   (Append this block to the BOTTOM of style.css)
+   =========================== */
+
+/* Pastikan body/html tidak dibatasi tinggi & tidak overflow yang memotong */
+html, body {
+  min-height: 100%;
+  height: auto;
+  overflow-x: hidden; /* cegah horizontal scroll */
+}
+
+/* Override aturan #main-content yang sebelumnya menggunakan max-height/overflow:hidden.
+   Kita pakai visibility + opacity untuk efek masuk/keluar sehingga konten tetap
+   mengikuti document flow (tidak dibatasi tinggi). */
+#main-content {
+  /* pastikan tetap ikut alur dokumen sehingga halaman bisa panjang */
+  max-height: none !important;
+  overflow: visible !important;
+
+  /* efek "hidden" awal — tidak mempengaruhi ukuran halaman */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(12px);
+  transition: opacity 360ms ease, transform 360ms ease, visibility 0s linear 360ms;
+  pointer-events: none;
+}
+
+/* Saat .show ditambahkan (dari JS) -> tampil normal tanpa membatasi tinggi */
+#main-content.show {
+  max-height: none !important;
+  overflow: visible !important;
+
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  transition: opacity 360ms ease, transform 360ms ease, visibility 0s linear 0s;
+  pointer-events: auto;
+}
+
+/* Jika ada overlay/menu dropdown yang muncul di mobile, batasi tinggi dan beri overflow-y
+   supaya menu tidak menutupi seluruh halaman dan tetap bisa discroll sendiri */
+#toolbar-buttons,
+.toolbar-right {
+  /* safe defaults jika di-override oleh rules lain */
+  max-height: none;
+  overflow: visible;
+}
+
+/* Mobile: menu hamburger (versi yang aman) */
+@media (max-width: 768px) {
+  /* pastikan menu dropdown tidak memblokir seluruh page tanpa scroll */
+  #toolbar-buttons {
+    max-height: 80vh;         /* tidak lebih tinggi dari viewport */
+    overflow-y: auto;         /* jika isinya panjang, menu sendiri yang discroll */
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* tombol close untuk menu (jika ingin ditambahkan via JS) */
+  #toolbar-buttons .close-hamburger {
+    display: block;
+  }
+}
+
+/* Popup/overlay safety: ketika display:none, jangan ganggu scroll halaman */
+.share-popup,
+.download-popup,
+.favorites-popup,
+#popup {
+  /* biar tidak mengunci scroll jika tidak aktif */
+  overflow-y: auto;
+}
+
+/* OPTIONAL: sedikit style untuk kontras menu mobile supaya lebih terlihat */
+@media (max-width: 768px) {
+  #toolbar-buttons {
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+    border-radius: 8px;
+  }
+  #toolbar-buttons button {
+    color: #222;
+  }
+}
+
+/* Pagination responsive fix */
+@media (max-width: 768px) {
+  .pagination {
+    display: flex;
+    justify-content: center;   /* biar semua tombol rata tengah */
+    gap: 6px;                  /* kasih jarak antar tombol */
+    padding: 10px 12px;        /* jarak dengan tepi layar */
+  }
+
+  .pagination button,
+  .pagination a {
+    padding: 8px 12px;         /* tombol lebih nyaman di-tap */
+    font-size: 14px;
+  }
+}
+
+/* Pagination fix khusus HP */
+@media (max-width: 768px) {
+  .pagination {
+    display: flex;
+    justify-content: center;   /* rata tengah */
+    flex-wrap: wrap;           /* kalau tombol banyak, turun ke bawah */
+    gap: 10px;                 /* jarak antar tombol */
+    padding: 12px 20px;        /* jarak dari tepi layar */
+    margin: 0 auto;            /* biar posisi di tengah */
+    max-width: 90%;            /* biar ada ruang kiri-kanan */
+  }
+
+  .pagination button,
+  .pagination a {
+    padding: 8px 14px;         /* area klik lebih luas */
+    font-size: 14px;
+    border-radius: 6px;        /* biar lebih nyaman dilihat */
+  }
+}
