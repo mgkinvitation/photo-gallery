@@ -16,6 +16,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   <!-- Favicon -->
   <link rel="icon" type="image/png" href="images/favicon.png">
+
+  <meta property="og:title" content="Galeri Foto Bayu" />
+  <meta property="og:description" content="Lihat koleksi foto keren di galeri Bayu." />
+  <meta property="og:image" content="https://mgkinvitation.github.io/photo-gallery/images/wa.png" />
+  <meta property="og:type" content="website" />
+
+
 </head>
 <body>
 
@@ -26,23 +33,19 @@
 
       <!-- Input link + tombol copy -->
       <div class="share-link">
-        <input type="text" id="shareLink" value="https://pixies.et/mV53K48Q" readonly>
+        <input type="text" id="shareLink" value="https://drive.google.com/drive/folders/1JlYP2jqT-aI8n4rIA8C2mvG3ZM00bFVK?usp=drive_link" readonly>
         <button id="copyBtn">COPY</button>
       </div>
 
       <!-- Ikon sosial -->
-      <div class="share-icons">
-        <a href="#" id="shareWhatsapp" target="_blank">
-          <i class="fab fa-whatsapp"></i>
-          <span>WhatsApp</span>
-        </a>
-        <a href="#" id="shareInstagram" target="_blank">
+      <div id="popupshare">
+        <a href="https://www.instagram.com/stevi.eventproject/" target="_blank">
           <i class="fab fa-instagram"></i>
           <span>Instagram</span>
         </a>
-        <a href="#" id="shareEmail" target="_blank">
-          <i class="fas fa-envelope"></i>
-          <span>Email</span>
+        <a href="https://wa.me/6281220009287" target="_blank">
+          <i class="fab fa-whatsapp"></i>
+          <span>WhatsApp</span>
         </a>
       </div>
 
@@ -63,18 +66,27 @@
     <i class="fa-solid fa-angle-down scroll-icon"></i>
   </header>
 
+  <div id="main-content">
   <!-- Toolbar -->
   <section class="toolbar" id="toolbar">
-    <div class="toolbar-left">
-      <h2>BAYU</h2>
-      <span class="subtitle">@stevi.eventproject</span>
-    </div>
-    <div class="toolbar-right">
-      <button id="btn-fav"><i class="fa-regular fa-heart"></i> Favorites</button>
-      <button id="btn-download"><i class="fa-solid fa-download"></i> Download</button>
-      <button id="btn-share"><i class="fa-solid fa-share-nodes"></i> Share</button>
-      <button id="btn-slideshow"><i class="fa-solid fa-play"></i> Slideshow</button>
-    </div>
+  <div class="toolbar-left">
+    <h2>BAYU</h2>
+    <span class="subtitle">@stevi.eventproject</span>
+  </div>
+
+  <!-- Hamburger (muncul di mobile) -->
+  <button class="hamburger" id="hamburger">
+    <i class="fa fa-bars"></i>
+  </button>
+
+  <!-- Toolbar Buttons -->
+  <div id="toolbar-buttons" class="toolbar-right">
+    <button class="close-hamburger">&times;</button>
+    <button id="btn-fav"><i class="fa-regular fa-heart"></i> Favorites</button>
+    <button id="btn-download"><i class="fa-solid fa-download"></i> Download</button>
+    <button id="btn-share"><i class="fa-solid fa-share-nodes"></i> Share</button>
+    <button id="btn-slideshow"><i class="fa-solid fa-play"></i> Slideshow</button>
+  </div>
   </section>
 
   <!-- Gallery -->
@@ -473,7 +485,7 @@
   <script src="script.js"></script>
 
   <!-- FOOTER -->
-<footer class="site-footer">
+  <footer class="site-footer">
   <div class="footer-container">
     
     <!-- Brand -->
@@ -488,8 +500,8 @@
       <h3>Explore</h3>
       <ul>
         <li><a href="#gallery">Gallery</a></li>
-        <li><a href="#download-popup">Download</a></li>
-        <li><a href="#sharePopup">Share</a></li>
+        <li><a href="javascript:void(0)" id="footer-download">Download</a></li>
+        <li><a href="javascript:void(0)" id="footer-share">Share</a></li>
       </ul>
     </div>
 
@@ -532,6 +544,7 @@
     <p>© 2025 Stevi Event Project. All rights reserved.</p>
   </div>
 </footer>
+</div>
 
 </body>
 </html>
